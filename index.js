@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
+const { specs, swaggerUi } = require('./config/swagger');
 const cors = require('cors');
 const authenticate = require('./middleware/authenticate');
 const authorize = require('./middleware/authorize');
@@ -25,8 +26,10 @@ app.use(session({
 }));
 
 app.use(bodyParser.json());
-console.log(123213)
 app.use('/auth', authRoutes);
+
+// wagger UI /api-docs
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // Middleware authenticate
 app.use(authenticate);
