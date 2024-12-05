@@ -7,6 +7,8 @@ const cors = require('cors');
 const authenticate = require('./middleware/authenticate');
 const authorize = require('./middleware/authorize');
 const authRoutes = require('./routes/auth');
+const medicineRoutes = require('./routes/medicine');
+
 require('dotenv').config();
 
 const app = express();
@@ -27,6 +29,7 @@ app.use(session({
 
 app.use(bodyParser.json());
 app.use('/auth', authRoutes);
+app.use('/medicine', medicineRoutes);
 
 // wagger UI /api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
