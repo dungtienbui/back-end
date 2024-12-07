@@ -7,6 +7,8 @@ const cors = require('cors');
 const authenticate = require('./middleware/authenticate');
 const authorize = require('./middleware/authorize');
 const authRoutes = require('./routes/auth');
+const clinicRoutes = require('./routes/clinicRoutes');
+const doctorRoutes = require('./routes/doctorRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -31,6 +33,10 @@ app.use('/auth', authRoutes);
 // wagger UI /api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
+
+app.use('/clinics', clinicRoutes);
+app.use('/doctors', doctorRoutes);
+
 // Middleware authenticate
 app.use(authenticate);
 
@@ -41,6 +47,11 @@ app.use('/admin', authorize(['admin']), (req, res) => res.json({ message: 'Admin
 app.get('/profile', (req, res) => {
     res.json({ username: req.user.username, role: req.user.role });
 });
+
+
+
+
+
 console.log(process.env.PORT);
 
 port = process.env.PORT || 3000;
